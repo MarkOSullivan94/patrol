@@ -292,6 +292,12 @@ const _$IOSElementTypeEnumMap = {
   IOSElementType.statusItem: 'statusItem',
 };
 
+const _$IOSSearchScopeEnumMap = {
+  IOSSearchScope.app: 'app',
+  IOSSearchScope.springboard: 'springboard',
+  IOSSearchScope.foreground: 'foreground',
+};
+
 AndroidGetNativeViewsRequest _$AndroidGetNativeViewsRequestFromJson(
   Map<String, dynamic> json,
 ) => AndroidGetNativeViewsRequest(
@@ -314,6 +320,7 @@ IOSGetNativeViewsRequest _$IOSGetNativeViewsRequestFromJson(
       ?.map((e) => e as String)
       .toList(),
   appId: json['appId'] as String,
+  scope: $enumDecodeNullable(_$IOSSearchScopeEnumMap, json['scope']),
 );
 
 Map<String, dynamic> _$IOSGetNativeViewsRequestToJson(
@@ -322,6 +329,7 @@ Map<String, dynamic> _$IOSGetNativeViewsRequestToJson(
   'selector': instance.selector?.toJson(),
   'iosInstalledApps': instance.iosInstalledApps,
   'appId': instance.appId,
+  'scope': _$IOSSearchScopeEnumMap[instance.scope],
 };
 
 AndroidNativeView _$AndroidNativeViewFromJson(Map<String, dynamic> json) =>
@@ -477,6 +485,7 @@ IOSTapRequest _$IOSTapRequestFromJson(Map<String, dynamic> json) =>
       selector: IOSSelector.fromJson(json['selector'] as Map<String, dynamic>),
       appId: json['appId'] as String,
       timeoutMillis: (json['timeoutMillis'] as num?)?.toInt(),
+      scope: $enumDecodeNullable(_$IOSSearchScopeEnumMap, json['scope']),
     );
 
 Map<String, dynamic> _$IOSTapRequestToJson(IOSTapRequest instance) =>
@@ -484,6 +493,7 @@ Map<String, dynamic> _$IOSTapRequestToJson(IOSTapRequest instance) =>
       'selector': instance.selector.toJson(),
       'appId': instance.appId,
       'timeoutMillis': instance.timeoutMillis,
+      'scope': _$IOSSearchScopeEnumMap[instance.scope],
     };
 
 AndroidTapAtRequest _$AndroidTapAtRequestFromJson(Map<String, dynamic> json) =>
@@ -559,6 +569,7 @@ IOSEnterTextRequest _$IOSEnterTextRequestFromJson(Map<String, dynamic> json) =>
       timeoutMillis: (json['timeoutMillis'] as num?)?.toInt(),
       dx: (json['dx'] as num?)?.toDouble(),
       dy: (json['dy'] as num?)?.toDouble(),
+      scope: $enumDecodeNullable(_$IOSSearchScopeEnumMap, json['scope']),
     );
 
 Map<String, dynamic> _$IOSEnterTextRequestToJson(
@@ -572,6 +583,7 @@ Map<String, dynamic> _$IOSEnterTextRequestToJson(
   'timeoutMillis': instance.timeoutMillis,
   'dx': instance.dx,
   'dy': instance.dy,
+  'scope': _$IOSSearchScopeEnumMap[instance.scope],
 };
 
 AndroidSwipeRequest _$AndroidSwipeRequestFromJson(Map<String, dynamic> json) =>
@@ -631,6 +643,7 @@ IOSWaitUntilVisibleRequest _$IOSWaitUntilVisibleRequestFromJson(
   selector: IOSSelector.fromJson(json['selector'] as Map<String, dynamic>),
   appId: json['appId'] as String,
   timeoutMillis: (json['timeoutMillis'] as num?)?.toInt(),
+  scope: $enumDecodeNullable(_$IOSSearchScopeEnumMap, json['scope']),
 );
 
 Map<String, dynamic> _$IOSWaitUntilVisibleRequestToJson(
@@ -639,6 +652,7 @@ Map<String, dynamic> _$IOSWaitUntilVisibleRequestToJson(
   'selector': instance.selector.toJson(),
   'appId': instance.appId,
   'timeoutMillis': instance.timeoutMillis,
+  'scope': _$IOSSearchScopeEnumMap[instance.scope],
 };
 
 DarkModeRequest _$DarkModeRequestFromJson(Map<String, dynamic> json) =>

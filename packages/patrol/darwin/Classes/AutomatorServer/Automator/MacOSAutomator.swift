@@ -80,7 +80,8 @@
     func tap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws {
       try runAction("tap") {
         throw PatrolError.methodNotImplemented("tap")
@@ -90,7 +91,8 @@
     func doubleTap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws {
       try runAction("doubleTap") {
         throw PatrolError.methodNotImplemented("doubleTap")
@@ -110,7 +112,8 @@
       dismissKeyboard: Bool,
       withTimeout timeout: TimeInterval?,
       dx: CGFloat,
-      dy: CGFloat
+      dy: CGFloat,
+      withScope scope: IOSSearchScope?
     ) throws {
       try runAction("enterText") {
         throw PatrolError.methodNotImplemented("enterText")
@@ -140,7 +143,8 @@
     func waitUntilVisible(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws {
       try runAction("waitUntilVisible") {
         throw PatrolError.methodNotImplemented("waitUntilVisible")
@@ -220,7 +224,7 @@
       }
     }
 
-    func getNativeViews(on selector: IOSSelector, inApp bundleId: String) throws -> [IOSNativeView]
+    func getNativeViews(on selector: IOSSelector, inApp bundleId: String, withScope scope: IOSSearchScope?) throws -> [IOSNativeView]
     {
       try runAction("getNativeViews") {
         throw PatrolError.methodNotImplemented("getNativeViews")

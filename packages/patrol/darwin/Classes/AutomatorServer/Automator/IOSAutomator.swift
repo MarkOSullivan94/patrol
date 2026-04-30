@@ -73,13 +73,14 @@
     func tap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope? = nil
     ) throws {
       var view = createLogMessage(element: "view", from: selector)
       view += " in app \(bundleId)"
 
       try runAction("tapping on \(view)") {
-        let app = try self.getApp(withBundleId: bundleId)
+        let app = try self.resolveApp(scope: scope, bundleId: bundleId)
 
         let query = app.descendants(matching: .any).matching(selector.toNSPredicate())
 
@@ -98,13 +99,14 @@
     func doubleTap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope? = nil
     ) throws {
       var view = createLogMessage(element: "view", from: selector)
       view += " in app \(bundleId)"
 
       try runAction("double tapping on \(view)") {
-        let app = try self.getApp(withBundleId: bundleId)
+        let app = try self.resolveApp(scope: scope, bundleId: bundleId)
         let query = app.descendants(matching: .any).matching(selector.toNSPredicate())
 
         Logger.shared.i("waiting for existence of \(view)")
@@ -136,7 +138,8 @@
       dismissKeyboard: Bool,
       withTimeout timeout: TimeInterval?,
       dx: CGFloat,
-      dy: CGFloat
+      dy: CGFloat,
+      withScope scope: IOSSearchScope? = nil
     ) throws {
       var data = data
       if dismissKeyboard {
@@ -147,7 +150,7 @@
       view += " in app \(bundleId)"
 
       try runAction("entering text \(format: data) into \(view)") {
-        let app = try self.getApp(withBundleId: bundleId)
+        let app = try self.resolveApp(scope: scope, bundleId: bundleId)
 
         // elementType must be specified as integer
         // See:
@@ -242,13 +245,14 @@
     func waitUntilVisible(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope? = nil
     ) throws {
       let view = createLogMessage(element: "view", from: selector)
       try runAction(
         "waiting until \(view) in app \(bundleId) becomes visible"
       ) {
-        let app = try self.getApp(withBundleId: bundleId)
+        let app = try self.resolveApp(scope: scope, bundleId: bundleId)
         let query = app.descendants(matching: .any).containing(selector.toNSPredicate())
         guard
           let element = self.waitFor(
@@ -519,11 +523,12 @@
 
     func getNativeViews(
       on selector: IOSSelector,
-      inApp bundleId: String
+      inApp bundleId: String,
+      withScope scope: IOSSearchScope? = nil
     ) throws -> [IOSNativeView] {
       let view = createLogMessage(element: "views", from: selector)
       return try runAction("getting native \(view)") {
-        let app = try self.getApp(withBundleId: bundleId)
+        let app = try self.resolveApp(scope: scope, bundleId: bundleId)
 
         // TODO: We should consider more view properties. See #1554
         let query = app.descendants(matching: .any).matching(selector.toNSPredicate())
@@ -542,6 +547,17 @@
         let foregroundApp = self.getForegroundApp(installedApps: installedApps)
         let snapshot = try foregroundApp.snapshot()
         return [IOSNativeView.fromXCUIElementSnapshot(snapshot, foregroundApp.identifier)]
+      }
+    }
+
+    private func resolveApp(scope: IOSSearchScope?, bundleId: String) throws -> XCUIApplication {
+      switch scope ?? .app {
+      case .app:
+        return try self.getApp(withBundleId: bundleId)
+      case .springboard:
+        return self.springboard
+      case .foreground:
+        return self.getForegroundApp(installedApps: [bundleId])
       }
     }
 

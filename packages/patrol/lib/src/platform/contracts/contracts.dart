@@ -51,6 +51,29 @@ enum SetLocationAccuracyRequestLocationAccuracy {
   final String value;
 }
 
+/// Defines the search scope for iOS selector-based native actions.
+///
+/// Use [app] (default) to query the app under test, [springboard] to query
+/// the SpringBoard process (useful for system alerts and UI), or [foreground]
+/// to query whichever application is currently in the foreground (useful for
+/// system-hosted UI like StoreKit sheets).
+enum IOSSearchScope {
+  /// Query the app under test (identified by [appId]). This is the default behavior.
+  app('app'),
+
+  /// Query SpringBoard (`com.apple.springboard`), the iOS system process that
+  /// hosts system alerts, the home screen, and related UI.
+  springboard('springboard'),
+
+  /// Query whichever application is currently in the foreground. Falls back to
+  /// [springboard] if no foreground app can be determined. Useful for
+  /// system-hosted UI such as StoreKit purchase sheets.
+  foreground('foreground');
+
+  const IOSSearchScope(this.value);
+  final String value;
+}
+
 enum IOSElementType {
   any('any'),
   other('other'),
@@ -543,6 +566,7 @@ class IOSGetNativeViewsRequest with EquatableMixin {
     this.selector,
     this.iosInstalledApps,
     required this.appId,
+    this.scope,
   });
 
   factory IOSGetNativeViewsRequest.fromJson(Map<String, dynamic> json) =>
@@ -551,11 +575,12 @@ class IOSGetNativeViewsRequest with EquatableMixin {
   final IOSSelector? selector;
   final List<String>? iosInstalledApps;
   final String appId;
+  final IOSSearchScope? scope;
 
   Map<String, dynamic> toJson() => _$IOSGetNativeViewsRequestToJson(this);
 
   @override
-  List<Object?> get props => [selector, iosInstalledApps, appId];
+  List<Object?> get props => [selector, iosInstalledApps, appId, scope];
 }
 
 @JsonSerializable()
@@ -779,6 +804,7 @@ class IOSTapRequest with EquatableMixin {
     required this.selector,
     required this.appId,
     this.timeoutMillis,
+    this.scope,
   });
 
   factory IOSTapRequest.fromJson(Map<String, dynamic> json) =>
@@ -787,11 +813,12 @@ class IOSTapRequest with EquatableMixin {
   final IOSSelector selector;
   final String appId;
   final int? timeoutMillis;
+  final IOSSearchScope? scope;
 
   Map<String, dynamic> toJson() => _$IOSTapRequestToJson(this);
 
   @override
-  List<Object?> get props => [selector, appId, timeoutMillis];
+  List<Object?> get props => [selector, appId, timeoutMillis, scope];
 }
 
 @JsonSerializable()
@@ -875,6 +902,7 @@ class IOSEnterTextRequest with EquatableMixin {
     this.timeoutMillis,
     this.dx,
     this.dy,
+    this.scope,
   });
 
   factory IOSEnterTextRequest.fromJson(Map<String, dynamic> json) =>
@@ -888,6 +916,7 @@ class IOSEnterTextRequest with EquatableMixin {
   final int? timeoutMillis;
   final double? dx;
   final double? dy;
+  final IOSSearchScope? scope;
 
   Map<String, dynamic> toJson() => _$IOSEnterTextRequestToJson(this);
 
@@ -901,6 +930,7 @@ class IOSEnterTextRequest with EquatableMixin {
     timeoutMillis,
     dx,
     dy,
+    scope,
   ];
 }
 
@@ -976,6 +1006,7 @@ class IOSWaitUntilVisibleRequest with EquatableMixin {
     required this.selector,
     required this.appId,
     this.timeoutMillis,
+    this.scope,
   });
 
   factory IOSWaitUntilVisibleRequest.fromJson(Map<String, dynamic> json) =>
@@ -984,11 +1015,12 @@ class IOSWaitUntilVisibleRequest with EquatableMixin {
   final IOSSelector selector;
   final String appId;
   final int? timeoutMillis;
+  final IOSSearchScope? scope;
 
   Map<String, dynamic> toJson() => _$IOSWaitUntilVisibleRequestToJson(this);
 
   @override
-  List<Object?> get props => [selector, appId, timeoutMillis];
+  List<Object?> get props => [selector, appId, timeoutMillis, scope];
 }
 
 @JsonSerializable()

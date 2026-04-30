@@ -32,6 +32,12 @@ public enum SetLocationAccuracyRequestLocationAccuracy: String, Codable {
   case fine = "fine"
 }
 
+public enum IOSSearchScope: String, Codable {
+  case app = "app"
+  case springboard = "springboard"
+  case foreground = "foreground"
+}
+
 public enum IOSElementType: String, Codable {
   case any = "any"
   case other = "other"
@@ -286,6 +292,7 @@ public struct IOSGetNativeViewsRequest: Codable {
   public var selector: IOSSelector?
   public var iosInstalledApps: [String]?
   public var appId: String
+  public var scope: IOSSearchScope?
 }
 
 public struct AndroidNativeView: Codable {
@@ -355,6 +362,7 @@ public struct IOSTapRequest: Codable {
   public var selector: IOSSelector
   public var appId: String
   public var timeoutMillis: Int?
+  public var scope: IOSSearchScope?
 }
 
 public struct AndroidTapAtRequest: Codable {
@@ -387,6 +395,7 @@ public struct IOSEnterTextRequest: Codable {
   public var timeoutMillis: Int?
   public var dx: Double?
   public var dy: Double?
+  public var scope: IOSSearchScope?
 }
 
 public struct AndroidSwipeRequest: Codable {
@@ -414,6 +423,7 @@ public struct IOSWaitUntilVisibleRequest: Codable {
   public var selector: IOSSelector
   public var appId: String
   public var timeoutMillis: Int?
+  public var scope: IOSSearchScope?
 }
 
 public struct DarkModeRequest: Codable {
