@@ -17,6 +17,7 @@ export 'src/platform/contracts/contracts.dart'
         GoogleApp,
         IOSElementType,
         IOSNativeView,
+        IOSSearchScope,
         KeyboardBehavior;
 export 'src/platform/patrol_app_service.dart';
 export 'src/platform/platform_automator.dart';

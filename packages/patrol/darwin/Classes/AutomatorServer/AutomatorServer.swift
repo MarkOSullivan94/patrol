@@ -68,7 +68,8 @@
         if let selector = request.selector {
           let roots = try automator.getNativeViews(
             on: selector,
-            inApp: request.appId
+            inApp: request.appId,
+            withScope: request.scope
           )
           return IOSGetNativeViewsResponse(roots: roots)
         } else {
@@ -83,7 +84,8 @@
         return try automator.tap(
           on: request.selector,
           inApp: request.appId,
-          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) }
+          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) },
+          withScope: request.scope
         )
       }
     }
@@ -93,7 +95,8 @@
         return try automator.doubleTap(
           on: request.selector,
           inApp: request.appId,
-          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) }
+          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) },
+          withScope: request.scope
         )
       }
     }
@@ -127,7 +130,8 @@
             dismissKeyboard: request.keyboardBehavior == .showAndDismiss,
             withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) },
             dx: request.dx ?? 0.9,
-            dy: request.dy ?? 0.9
+            dy: request.dy ?? 0.9,
+            withScope: request.scope
           )
         } else {
           throw PatrolError.internal("enterText(): neither index nor selector are set")
@@ -150,7 +154,8 @@
         return try automator.waitUntilVisible(
           on: request.selector,
           inApp: request.appId,
-          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) }
+          withTimeout: request.timeoutMillis.map { TimeInterval($0 / 1000) },
+          withScope: request.scope
         )
       }
     }
@@ -335,12 +340,14 @@
       try automator.tap(
         on: request.shutterButtonSelector ?? IOSSelector(identifier: "PhotoCapture"),
         inApp: request.appId,
-        withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+        withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+        withScope: nil
       )
       try automator.tap(
         on: request.doneButtonSelector ?? IOSSelector(identifier: "Done"),
         inApp: request.appId,
-        withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+        withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+        withScope: nil
       )
     }
 
@@ -350,7 +357,8 @@
         try automator.tap(
           on: request.imageSelector!,
           inApp: request.appId,
-          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+          withScope: nil
         )
       } else {
         try automator.tap(
@@ -361,7 +369,8 @@
             elementType: IOSElementType.image
           ),
           inApp: request.appId,
-          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+          withScope: nil
         )
       }
     }
@@ -376,7 +385,8 @@
             try automator.tap(
               on: imageSelector,
               inApp: request.appId,
-              withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+              withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+              withScope: nil
             )
           } else {
             try automator.tap(
@@ -386,7 +396,8 @@
                 elementType: IOSElementType.image
               ),
               inApp: request.appId,
-              withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+              withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+              withScope: nil
             )
           }
         }
@@ -398,7 +409,8 @@
             identifier: "Add"
           ),
           inApp: request.appId,
-          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000)
+          withTimeout: TimeInterval(request.timeoutMillis ?? 100000 / 1000),
+          withScope: nil
         )
       }
     }

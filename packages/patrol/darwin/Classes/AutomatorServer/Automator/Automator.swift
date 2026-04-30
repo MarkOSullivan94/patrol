@@ -178,12 +178,14 @@
     func tap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws
     func doubleTap(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws
     func tapAt(coordinate vector: CGVector, inApp bundleId: String) throws
     func enterText(
@@ -193,7 +195,8 @@
       dismissKeyboard: Bool,
       withTimeout timeout: TimeInterval?,
       dx: CGFloat,
-      dy: CGFloat
+      dy: CGFloat,
+      withScope scope: IOSSearchScope?
     ) throws
     func enterText(
       _ data: String,
@@ -208,7 +211,8 @@
     func waitUntilVisible(
       on selector: IOSSelector,
       inApp bundleId: String,
-      withTimeout timeout: TimeInterval?
+      withTimeout timeout: TimeInterval?,
+      withScope scope: IOSSearchScope?
     ) throws
 
     // MARK: Volume settings
@@ -228,7 +232,8 @@
     func disableBluetooth() throws
     func getNativeViews(
       on selector: IOSSelector,
-      inApp bundleId: String
+      inApp bundleId: String,
+      withScope scope: IOSSearchScope?
     ) throws -> [IOSNativeView]
     func getUITreeRoots(installedApps: [String]) throws -> [IOSNativeView]
 

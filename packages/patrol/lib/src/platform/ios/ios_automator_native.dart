@@ -202,6 +202,7 @@ class IOSAutomator extends NativeMobileAutomator
     IOSSelector selector, {
     String? appId,
     Duration? timeout,
+    IOSSearchScope? scope,
   }) async {
     await wrapRequest('tap', () async {
       await _client.tap(
@@ -209,6 +210,7 @@ class IOSAutomator extends NativeMobileAutomator
           selector: selector,
           appId: appId ?? resolvedAppId,
           timeoutMillis: timeout?.inMilliseconds,
+          scope: scope,
         ),
       );
     });
@@ -225,6 +227,7 @@ class IOSAutomator extends NativeMobileAutomator
     IOSSelector selector, {
     String? appId,
     Duration? timeout,
+    IOSSearchScope? scope,
   }) async {
     await wrapRequest(
       'doubleTap',
@@ -233,6 +236,7 @@ class IOSAutomator extends NativeMobileAutomator
           selector: selector,
           appId: appId ?? resolvedAppId,
           timeoutMillis: timeout?.inMilliseconds,
+          scope: scope,
         ),
       ),
     );
@@ -282,6 +286,7 @@ class IOSAutomator extends NativeMobileAutomator
     KeyboardBehavior? keyboardBehavior,
     Duration? timeout,
     Offset? tapLocation,
+    IOSSearchScope? scope,
   }) async {
     await wrapRequest(
       'enterText',
@@ -295,6 +300,7 @@ class IOSAutomator extends NativeMobileAutomator
           timeoutMillis: timeout?.inMilliseconds,
           dx: tapLocation?.dx ?? 0.9,
           dy: tapLocation?.dy ?? 0.9,
+          scope: scope,
         ),
       ),
     );
@@ -444,6 +450,7 @@ class IOSAutomator extends NativeMobileAutomator
     IOSSelector selector, {
     String? appId,
     Duration? timeout,
+    IOSSearchScope? scope,
   }) async {
     await wrapRequest(
       'waitUntilVisible',
@@ -452,6 +459,7 @@ class IOSAutomator extends NativeMobileAutomator
           selector: selector,
           appId: appId ?? resolvedAppId,
           timeoutMillis: timeout?.inMilliseconds,
+          scope: scope,
         ),
       ),
     );
@@ -466,6 +474,7 @@ class IOSAutomator extends NativeMobileAutomator
     IOSSelector? selector, {
     List<String>? iosInstalledApps,
     String? appId,
+    IOSSearchScope? scope,
   }) {
     return wrapRequest(
       'getNativeViews',
@@ -474,6 +483,7 @@ class IOSAutomator extends NativeMobileAutomator
           selector: selector,
           appId: appId ?? resolvedAppId,
           iosInstalledApps: iosInstalledApps,
+          scope: scope,
         ),
       ),
       enablePatrolLog: false,

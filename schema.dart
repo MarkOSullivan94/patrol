@@ -111,6 +111,7 @@ class IOSGetNativeViewsRequest {
   IOSSelector? selector;
   List<String>? iosInstalledApps;
   late String appId;
+  IOSSearchScope? scope;
 }
 
 class AndroidNativeView {
@@ -178,10 +179,13 @@ class AndroidTapRequest {
   int? delayBetweenTapsMillis;
 }
 
+enum IOSSearchScope { app, springboard, foreground }
+
 class IOSTapRequest {
   late IOSSelector selector;
   late String appId;
   int? timeoutMillis;
+  IOSSearchScope? scope;
 }
 
 class AndroidTapAtRequest {
@@ -216,6 +220,7 @@ class IOSEnterTextRequest {
   int? timeoutMillis;
   double? dx;
   double? dy;
+  IOSSearchScope? scope;
 }
 
 class AndroidSwipeRequest {
@@ -243,6 +248,7 @@ class IOSWaitUntilVisibleRequest {
   late IOSSelector selector;
   late String appId;
   int? timeoutMillis;
+  IOSSearchScope? scope;
 }
 
 class DarkModeRequest {

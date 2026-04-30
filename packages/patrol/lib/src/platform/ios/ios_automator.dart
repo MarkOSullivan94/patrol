@@ -76,7 +76,17 @@ abstract interface class IOSAutomator implements MobileAutomator {
   /// [timeout] is not specified, it utilizes the
   /// [IOSAutomatorConfig.findTimeout] duration from the configuration.
   /// If the native view is not found, an exception is thrown.
-  Future<void> tap(IOSSelector selector, {String? appId, Duration? timeout});
+  ///
+  /// The optional [scope] parameter controls which XCUIApplication is searched:
+  /// - [IOSSearchScope.app] (default): the app under test
+  /// - [IOSSearchScope.springboard]: SpringBoard system process
+  /// - [IOSSearchScope.foreground]: the current foreground application
+  Future<void> tap(
+    IOSSelector selector, {
+    String? appId,
+    Duration? timeout,
+    IOSSearchScope? scope,
+  });
 
   /// Double taps on the native view specified by [selector].
   ///
@@ -84,10 +94,16 @@ abstract interface class IOSAutomator implements MobileAutomator {
   /// [timeout] is not specified, it utilizes the
   /// [IOSAutomatorConfig.findTimeout] duration from the configuration.
   /// If the native view is not found, an exception is thrown.
+  ///
+  /// The optional [scope] parameter controls which XCUIApplication is searched:
+  /// - [IOSSearchScope.app] (default): the app under test
+  /// - [IOSSearchScope.springboard]: SpringBoard system process
+  /// - [IOSSearchScope.foreground]: the current foreground application
   Future<void> doubleTap(
     IOSSelector selector, {
     String? appId,
     Duration? timeout,
+    IOSSearchScope? scope,
   });
 
   /// Taps at a given [location].
@@ -105,6 +121,11 @@ abstract interface class IOSAutomator implements MobileAutomator {
   /// The native view specified by [selector] must be:
   ///  * TextField or SecureTextField on iOS
   ///
+  /// The optional [scope] parameter controls which XCUIApplication is searched:
+  /// - [IOSSearchScope.app] (default): the app under test
+  /// - [IOSSearchScope.springboard]: SpringBoard system process
+  /// - [IOSSearchScope.foreground]: the current foreground application
+  ///
   /// See also:
   ///  * [enterTextByIndex], which is less flexible but also less verbose
   Future<void> enterText(
@@ -114,6 +135,7 @@ abstract interface class IOSAutomator implements MobileAutomator {
     KeyboardBehavior? keyboardBehavior,
     Duration? timeout,
     Offset? tapLocation,
+    IOSSearchScope? scope,
   });
 
   /// Enters text to the [index]-th visible text field.
@@ -188,20 +210,40 @@ abstract interface class IOSAutomator implements MobileAutomator {
   /// It waits for the view to become visible for [timeout] duration. If
   /// [timeout] is not specified, it utilizes the
   /// [IOSAutomatorConfig.findTimeout].
+  ///
+  /// The optional [scope] parameter controls which XCUIApplication is searched:
+  /// - [IOSSearchScope.app] (default): the app under test
+  /// - [IOSSearchScope.springboard]: SpringBoard system process
+  /// - [IOSSearchScope.foreground]: the current foreground application
+  ///
+  /// Example – wait for a StoreKit sheet button in the foreground app:
+  /// ```dart
+  /// await $.platform.ios.waitUntilVisible(
+  ///   IOSSelector(labelContains: 'Subscribe', elementType: IOSElementType.button),
+  ///   scope: IOSSearchScope.foreground,
+  /// );
+  /// ```
   Future<void> waitUntilVisible(
     IOSSelector selector, {
     String? appId,
     Duration? timeout,
+    IOSSearchScope? scope,
   });
 
   /// Returns a list of currently visible native UI controls, specified by
   /// [selector], which are currently visible on screen.
   ///
   /// If [selector] is null, returns the whole native UI tree.
+  ///
+  /// The optional [scope] parameter controls which XCUIApplication is searched:
+  /// - [IOSSearchScope.app] (default): the app under test
+  /// - [IOSSearchScope.springboard]: SpringBoard system process
+  /// - [IOSSearchScope.foreground]: the current foreground application
   Future<IOSGetNativeViewsResponse> getNativeViews(
     IOSSelector? selector, {
     List<String>? iosInstalledApps,
     String? appId,
+    IOSSearchScope? scope,
   });
 
   /// Take and confirm the photo
